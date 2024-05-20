@@ -56,7 +56,7 @@ const ItemsList: React.FC = ({ navigation, route }) => {
   }, []);
 
   const onPressHandler = ( () => {
-
+    navigation.navigate('ItemsDetails');
   } );
 
   return (

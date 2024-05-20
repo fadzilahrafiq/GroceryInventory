@@ -7,6 +7,7 @@ import ROUTES from '../constants/routes';
 import TabNavigation from './TabNavigation';
 import Home from '../pages/Home';
 import ItemsList from '../pages/Items-List';
+import ItemsDetails from '../pages/Items-Details';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,6 +25,7 @@ const ItemsListStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='ItemsList' component={ItemsList}/>
+      <Stack.Screen name='ItemsDetails' component={ItemsDetails}/>
     </Stack.Navigator>
   );
 }
