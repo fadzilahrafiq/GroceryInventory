@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {SafeAreaView, Image, View, Text, TouchableOpacity} from 'react-native';
 import styles from './Items-List.style';
 import { FlatList } from 'react-native-gesture-handler';
-import sampleData from '../../constants/sample-data.json';
+// import sampleData from '../../constants/sample-data.json';
 
 const Item = ({ item, onPressHandler }) => {
   const isExpired = new Date(item.expiry_date) < new Date();
@@ -22,7 +22,39 @@ const ExpiredText = () => (
   </View>
 );
 
-const ItemsList: React.FC = () => {
+const ItemsList: React.FC = ({ navigation, route }) => {
+  const [data, setData] = useState([]);
+  const routeParams = route.params;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = require('../../constants/sample-data.json');
+
+        let tempData = response.itemList;
+
+        if (routeParams && routeParams.isExpired) {
+          tempData = response.itemList.filter( (el) => {
+            return new Date() >= new Date(el.expiry_date);
+          });
+        } else if (routeParams && routeParams.isNearing) {
+          tempData = response.itemList.filter( (el) => {
+            var expiryDate = new Date(el.expiry_date);
+            var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
+            var currDate = new Date();
+            return currDate < new Date(el.expiry_date) && currDate >= oneMonthPrior ;
+          });
+        }
+
+        setData(tempData);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const onPressHandler = ( () => {
 
   } );
@@ -33,7 +65,7 @@ const ItemsList: React.FC = () => {
         <Text style={styles.topBarText}>YouGrocer</Text>
       </View>
       <FlatList
-        data={sampleData.itemList}
+        data={data}
         renderItem={({ item }) => <Item item={item} onPressHandler={onPressHandler} />}
         keyExtractor={(item) => item.id}
         numColumns={2}
