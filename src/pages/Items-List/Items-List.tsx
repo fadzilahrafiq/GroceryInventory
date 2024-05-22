@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import {SafeAreaView, Image, View, Text, TouchableOpacity} from 'react-native';
 import styles from './Items-List.style';
 import { FlatList } from 'react-native-gesture-handler';
+import { firebase } from '@react-native-firebase/database';
 // import sampleData from '../../constants/sample-data.json';
 
 const Item = ({ item, onPressHandler }) => {
   const isExpired = new Date(item.expiry_date) < new Date();
 
+  var expiryDate = new Date(item.expiry_date);
+  var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
+  var currDate = new Date();
+  const isNearing = currDate < new Date(item.expiry_date) && currDate >= oneMonthPrior ;
+
   return (
   <TouchableOpacity onPress={ onPressHandler } style={styles.listItem}>
     {isExpired && <ExpiredText />}
+    {isNearing && <NearingExpireText />}
     <Image source={require('../../assets/images/default.png')} style={ styles.listItemImage } />
     <Text style={styles.listItemText}>{item.item_name}</Text>
   </TouchableOpacity>
@@ -22,11 +29,45 @@ const ExpiredText = () => (
   </View>
 );
 
+const NearingExpireText = () => (
+  <View style={ styles.nearingContainer }>
+    <Text>Expiring Soon</Text>
+  </View>
+);
+
 const ItemsList: React.FC = ({ navigation, route }) => {
   const [data, setData] = useState([]);
   const routeParams = route.params;
 
   useEffect(() => {
+    const reference = firebase
+        .app()
+        .database('https://groceryinventory-1dffc-default-rtdb.asia-southeast1.firebasedatabase.app')
+        .ref('/itemList');
+
+    const fetchFirebaseData = async () => {
+      const onValueChange = reference.on('value', snapshot => {
+        let tempData = snapshot.val();
+
+        if (routeParams && routeParams.isExpired) {
+          tempData = response.itemList.filter( (el) => {
+            return new Date() >= new Date(el.expiry_date);
+          });
+        } else if (routeParams && routeParams.isNearing) {
+          tempData = response.itemList.filter( (el) => {
+            var expiryDate = new Date(el.expiry_date);
+            var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
+            var currDate = new Date();
+            return currDate < new Date(el.expiry_date) && currDate >= oneMonthPrior ;
+          });
+        }
+
+        setData(tempData);
+      })
+    }
+
+    fetchFirebaseData();
+
     const fetchData = async () => {
       try {
         const response = require('../../constants/sample-data.json');
@@ -52,7 +93,7 @@ const ItemsList: React.FC = ({ navigation, route }) => {
       }
     };
 
-    fetchData();
+    // fetchData();
   }, []);
 
   const onPressHandler = ( () => {

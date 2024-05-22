@@ -41,7 +41,7 @@ const ItemsDetails = () => {
         </View>
         <View style={styles.inputFieldContainer}>
           <TouchableOpacity style={styles.submitButton}>
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text>Submit</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -59,5 +59,15 @@ export default StyleSheet.create({
         padding: 5,
         borderRadius: 3,
         zIndex: 1
+    },
+    nearingContainer: {
+        position: 'absolute',
+        top: -10,
+        right: -10,
+        backgroundColor: '#f39731',
+        // opacity: 0.8,
+        padding: 5,
+        borderRadius: 3,
+        zIndex: 1
     }
 })
