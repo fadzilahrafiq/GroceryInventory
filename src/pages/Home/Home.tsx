@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {Image, View, Text} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './Home.style';
+import { firebase } from '@react-native-firebase/database';
+import VARIABLES from '../../constants/variables';
 
 const Home: React.FC = () => {
   const [data, setData] = useState([]);
@@ -10,32 +12,33 @@ const Home: React.FC = () => {
 
   const navigation = useNavigation();
 
+  const reference = firebase
+  .app()
+  .database(VARIABLES.FIREBASE_DB)
+  .ref('/itemList');
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const response = await fetch('../../constants/sample-data.json');
-        // const jsonData = await response.json();
-        // setData(jsonData.itemList);
-        const response = require('../../constants/sample-data.json');
-        setData(response.itemList);
 
-        // Filter out expired items
-        let tempValueHolder = response.itemList;
+    const fetchFirebaseData = async () => {
+      reference.on('value', snapshot => {
+        let tempData = snapshot.val();
 
-        setExpired(response.itemList.filter( (el) => { return new Date() > new Date(el.expiry_date) }));
+        setData(tempData);
 
-        setNearing(response.itemList.filter( el => {
+        setExpired(tempData.filter( (el) => { return new Date() > new Date(el.expiry_date) }));
+
+        setNearing(tempData.filter( el => {
           var expiryDate = new Date(el.expiry_date);
           var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
           var currDate = new Date();
           return currDate < new Date(el.expiry_date) && currDate >= oneMonthPrior ;
         }))
-      } catch (err) {
-        console.error(err);
-      }
-    };
 
-    fetchData();
+      })
+    }
+
+    fetchFirebaseData();
+
   }, []);
 
   const handleReviewPress = () => {

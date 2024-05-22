@@ -40,11 +40,13 @@ export default StyleSheet.create({
   },
   textInputHeader: {
     width: '100%',
+    fontSize: 12,
     marginBottom: 10,
     color: 'rgba(0,0,0,.8)'
   },
   textInput: {
     width: '100%',
+    fontSize: 18,
     backgroundColor: 'white',
     borderRadius: 5,
     color: 'black'

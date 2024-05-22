@@ -3,7 +3,7 @@ import {SafeAreaView, Image, View, Text, TouchableOpacity} from 'react-native';
 import styles from './Items-List.style';
 import { FlatList } from 'react-native-gesture-handler';
 import { firebase } from '@react-native-firebase/database';
-// import sampleData from '../../constants/sample-data.json';
+import VARIABLES from '../../constants/variables';
 
 const Item = ({ item, onPressHandler }) => {
   const isExpired = new Date(item.expiry_date) < new Date();
@@ -14,7 +14,7 @@ const Item = ({ item, onPressHandler }) => {
   const isNearing = currDate < new Date(item.expiry_date) && currDate >= oneMonthPrior ;
 
   return (
-  <TouchableOpacity onPress={ onPressHandler } style={styles.listItem}>
+  <TouchableOpacity key={item.id} onPress={ () => onPressHandler(item.id) } style={styles.listItem}>
     {isExpired && <ExpiredText />}
     {isNearing && <NearingExpireText />}
     <Image source={require('../../assets/images/default.png')} style={ styles.listItemImage } />
@@ -41,20 +41,20 @@ const ItemsList: React.FC = ({ navigation, route }) => {
 
   useEffect(() => {
     const reference = firebase
-        .app()
-        .database('https://groceryinventory-1dffc-default-rtdb.asia-southeast1.firebasedatabase.app')
-        .ref('/itemList');
+      .app()
+      .database(VARIABLES.FIREBASE_DB)
+      .ref('/itemList');
 
     const fetchFirebaseData = async () => {
       const onValueChange = reference.on('value', snapshot => {
         let tempData = snapshot.val();
 
-        if (routeParams && routeParams.isExpired) {
-          tempData = response.itemList.filter( (el) => {
+        if (routeParams && routeParams.isExpired && snapshot.val()) {
+          tempData = snapshot.val().filter( (el) => {
             return new Date() >= new Date(el.expiry_date);
           });
-        } else if (routeParams && routeParams.isNearing) {
-          tempData = response.itemList.filter( (el) => {
+        } else if (routeParams && routeParams.isNearing && snapshot.val()) {
+          tempData = snapshot.val().filter( (el) => {
             var expiryDate = new Date(el.expiry_date);
             var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
             var currDate = new Date();
@@ -96,9 +96,9 @@ const ItemsList: React.FC = ({ navigation, route }) => {
     // fetchData();
   }, []);
 
-  const onPressHandler = ( () => {
-    navigation.navigate('ItemsDetails');
-  } );
+  const onPressHandler = (itemId) => {
+    navigation.navigate('ItemsDetails', { itemId: itemId});
+  };
 
   return (
     <View style={styles.container}>
