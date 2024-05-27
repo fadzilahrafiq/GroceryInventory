@@ -6,17 +6,36 @@ export default StyleSheet.create({
         flex:1,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        backgroundColor:'#AAC8A7',
+        backgroundColor:'#f7f7f7',
         alignContent: 'flex-start',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 50
-    
+        justifyContent: 'center'
+        // overflow: 'scroll'
     },
     text:{
-        color:'white',
+        color:'#1667B3',
         fontSize:24
     
+    },
+    userBar: {
+        width: '100%',
+        // backgroundColor: 'red',
+        padding: 20,
+        paddingTop: 20,
+        paddingBottom: 60,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
+    userBarText: {
+        color: '#1667B3',
+    },
+    userBarIcon: {
+        width: 40,
+        height: 40,
+        borderRadius: 50
     },
     header: {
         width: '100%',
@@ -36,7 +55,7 @@ export default StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'white',
+        color: '#1667B3',
     },
     content: {
         width: '100%',
@@ -51,13 +70,23 @@ export default StyleSheet.create({
     contentBox: {
         width: '100%',
         padding: 10,
+        paddingBottom: 5,
+        paddingTop: 5,
         marginBottom: 10,
         borderRadius: 10,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignContent: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,.1)'
+        backgroundColor: '#ffffff',//'rgba(22,103,179,1)',
+        borderWidth: 1,
+        borderColor: 'rgba(22,103,179, .2)',
+    },
+    contentBoxWarning: {
+        backgroundColor: 'rgba(243,151,49, 1)',
+    },
+    contentBoxError: {
+        backgroundColor: 'rgba(238,83,47, 1)',
     },
     contentLogoContainer: {
         width: '30%',
@@ -68,13 +97,21 @@ export default StyleSheet.create({
         justifyContent: 'center',
     },
     contentTextContainer: {
-        width: '70%',
+        width: '100%',//'70%',
+        padding: 20,
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
+        color: '#1667B3'
         // backgroundColor: 'black'
+    },
+    contextTextWarning: {
+        color: 'white'//'#ff9800' 
+    },
+    contextTextError: {
+        color: 'white',//'#ff5722' 
     },
     contentPlaceholderLogo: {
         width: 70,
@@ -82,7 +119,8 @@ export default StyleSheet.create({
         borderRadius: 50
     },
     contentTextCommon: {
-        width: '100%'
+        width: '100%',
+        color: '#1667B3'
     },
     contentTextTitle: {
         fontSize: 22,
@@ -93,10 +131,12 @@ export default StyleSheet.create({
     },
     contentTextLink: {
         fontSize: 12,
-        marginTop: 20,
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'right',
+        color: '#1f1f1f',
+        marginTop: 20,
+        marginBottom: 0
     }
 })

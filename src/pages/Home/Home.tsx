@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Image, View, Text} from 'react-native';
+import {Image, View, Text, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './Home.style';
 import { firebase } from '@react-native-firebase/database';
 import VARIABLES from '../../constants/variables';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Home: React.FC = () => {
   const [data, setData] = useState([]);
@@ -57,51 +58,60 @@ const Home: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* HEADER CONTAINER */}
-      <View style={styles.header}>
-        <Image source={require('../../assets/images/default.png')} style={ styles.headerLogo } />
-        <Text style={styles.headerText}>YouGrocer</Text>
-      </View>
-      {/* CONTENT CONTAINER */}
-      <View style={styles.content}>
-        {/* CONTENT NEARING EXPIRY */}
-        <View style={styles.contentBox}>
-          <View style={styles.contentLogoContainer}>
-            <Image source={require('../../assets/images/default.png')} style={ styles.contentPlaceholderLogo } />
-          </View>
-          <View style={styles.contentTextContainer}>
-            <Text style={[styles.contentTextCommon, styles.contentTextTitle]}>Nearing Expiry</Text>
-            <Text style={[styles.contentTextCommon, styles.contentTextSub]}>{nearingData.length} items are nearing expiry</Text>
-            <Text style={[styles.contentTextCommon, styles.contentTextLink]} onPress={handleViewPress}>Click to view</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        {/* HEADER CONTAINER */}
+        <View style={styles.userBar}>
+          <Text style={styles.userBarText}></Text>
+          <View>
+            {/* <Icon name='notifications' color='red' size={10}/> */}
+            <Image source={require('../../assets/images/default.png')} style={ styles.userBarIcon }/>
           </View>
         </View>
+        <View style={styles.header}>
+          <Image source={require('../../assets/images/default.png')} style={ styles.headerLogo } />
+          <Text style={styles.headerText}>YouGrocer</Text>
+        </View>
+        {/* CONTENT CONTAINER */}
+        <View style={styles.content}>
+          {/* CONTENT NEARING EXPIRY */}
+          <View style={[styles.contentBox, styles.contentBoxWarning]}>
+            {/* <View style={styles.contentLogoContainer}>
+              <Image source={require('../../assets/images/default.png')} style={ styles.contentPlaceholderLogo } />
+            </View> */}
+            <View style={[styles.contentTextContainer]}>
+              <Text style={[styles.contentTextCommon, styles.contentTextTitle, styles.contextTextWarning]}>Nearing Expiry</Text>
+              <Text style={[styles.contentTextCommon, styles.contentTextSub, styles.contextTextWarning]}>{nearingData.length} items are nearing expiry</Text>
+              <Text style={[styles.contentTextCommon, styles.contentTextLink, styles.contextTextWarning]} onPress={handleViewPress}>Click to view <Icon name='angle-right'/></Text>
+            </View>
+          </View>
 
-        {/* CONTENT EXPIRED */}
-        <View style={styles.contentBox}>
-          <View style={styles.contentLogoContainer}>
-            <Image source={require('../../assets/images/default.png')} style={ styles.contentPlaceholderLogo } />
+          {/* CONTENT EXPIRED */}
+          <View style={[styles.contentBox, styles.contentBoxError]}>
+            {/* <View style={styles.contentLogoContainer}>
+              <Image source={require('../../assets/images/default.png')} style={ styles.contentPlaceholderLogo } />
+            </View> */}
+            <View style={styles.contentTextContainer}>
+              <Text style={[styles.contentTextCommon, styles.contentTextTitle, styles.contextTextError]}>Expired Items</Text>
+              <Text style={[styles.contentTextCommon, styles.contentTextSub, styles.contextTextError]}>{expiredData.length} items have expired</Text>
+              <Text style={[styles.contentTextCommon, styles.contentTextLink, styles.contextTextError]} onPress={handleReviewPress}>Click to review <Icon name='angle-right'/></Text>
+            </View>
           </View>
-          <View style={styles.contentTextContainer}>
-            <Text style={[styles.contentTextCommon, styles.contentTextTitle]}>Expired Items</Text>
-            <Text style={[styles.contentTextCommon, styles.contentTextSub]}>{expiredData.length} items have expired</Text>
-            <Text style={[styles.contentTextCommon, styles.contentTextLink]} onPress={handleReviewPress}>Click to review</Text>
-          </View>
-        </View>
 
-        {/* CONTENT ADD NEW ITEMS */}
-        <View style={styles.contentBox}>
-          <View style={styles.contentLogoContainer}>
-            <Image source={require('../../assets/images/default.png')} style={ styles.contentPlaceholderLogo } />
-          </View>
-          <View style={styles.contentTextContainer}>
-            <Text style={[styles.contentTextCommon, styles.contentTextTitle]}>Add Items</Text>
-            <Text style={[styles.contentTextCommon, styles.contentTextSub]}>Total {data.length} items are listed</Text>
-            <Text style={[styles.contentTextCommon, styles.contentTextLink]} onPress={handleAddPress}>Click to add new items</Text>
+          {/* CONTENT ADD NEW ITEMS */}
+          <View style={styles.contentBox}>
+            {/* <View style={styles.contentLogoContainer}>
+              <Image source={require('../../assets/images/default.png')} style={ styles.contentPlaceholderLogo } />
+            </View> */}
+            <View style={styles.contentTextContainer}>
+              <Text style={[styles.contentTextCommon, styles.contentTextTitle]}>Add Items</Text>
+              <Text style={[styles.contentTextCommon, styles.contentTextSub]}>Total {data.length} items are listed</Text>
+              <Text style={[styles.contentTextCommon, styles.contentTextLink]} onPress={handleAddPress}>Click to add items <Icon name='angle-right'/></Text>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

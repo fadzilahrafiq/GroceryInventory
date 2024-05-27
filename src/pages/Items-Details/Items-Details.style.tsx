@@ -3,7 +3,7 @@ import { StyleSheet,Dimensions} from "react-native";
 export default StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor:'#AAC8A7',
+    backgroundColor:'#f7f7f7',
     paddingTop: 0,
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -47,12 +47,12 @@ export default StyleSheet.create({
   textInput: {
     width: '100%',
     fontSize: 18,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff',
     borderRadius: 5,
     color: 'black'
   },
   submitButton: {
-    backgroundColor: '#1E90FF', 
+    backgroundColor: '#1667B3', 
     paddingVertical: 15, 
     width: '100%', 
     borderRadius: 5,

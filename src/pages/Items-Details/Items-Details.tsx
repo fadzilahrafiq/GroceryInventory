@@ -33,8 +33,8 @@ const formatDateToFormat = (dateObject) => {
 const ItemsDetails = ({ navigation, route }) => {
   const currentDate = new Date();
   const [itemKey, onItemKey] = useState(null);
-  const [name, onNameChange] = useState('Sample');
-  const [category, onCategoryChange] = useState('Vegetable');
+  const [name, onNameChange] = useState('');
+  const [category, onCategoryChange] = useState('');
   const [expiryObj, onExpiryChange] = useState(currentDate);
   const [expiry, onExpiryChangeText] = useState(currentDate.toLocaleDateString());
   const [openDatePicker, setDatePicker] = useState(false);
@@ -42,8 +42,10 @@ const ItemsDetails = ({ navigation, route }) => {
   useEffect( () => {
     const fetchData = () => {
       const routeParams = route.params;
+
+      console.log(routeParams);
     
-      if (routeParams.itemId) {
+      if (routeParams.itemId && routeParams.itemId != null) {
         firebase
           .app()
           .database(VARIABLES.FIREBASE_DB)

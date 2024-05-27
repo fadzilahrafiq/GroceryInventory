@@ -4,10 +4,11 @@ export default StyleSheet.create({
 
     container:{
         flex:1,
-        backgroundColor:'#AAC8A7'
+        backgroundColor:'#f7f7f7',
+        position: 'relative'
     },
     text:{
-        color:'white',
+        color:'#1667B3',
         fontSize:24
     },
     topBar: {
@@ -16,11 +17,13 @@ export default StyleSheet.create({
         alignItems: 'center',
         // backgroundColor: 'lightgray',
         padding: 10,
-        marginBottom: 30
+        marginBottom: 30,
+        marginTop: 10
     },
     topBarText: {
         fontSize: 20,
         fontWeight: 'bold',
+        color: '#1667B3'
     },
     listItem: {
         position: 'relative',
@@ -30,8 +33,9 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        borderBottomColor: '#ddd',
-        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: 'rgba(22,103,179, .1)',
+        backgroundColor: '#fff',
         margin: '5%',
         borderRadius: 5
     },
@@ -69,5 +73,18 @@ export default StyleSheet.create({
         padding: 5,
         borderRadius: 3,
         zIndex: 1
+    },
+    floatingButton: {
+        position: 'absolute',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        bottom: 10,
+        right: 10,
+        backgroundColor: "#1667B3",
+        padding: 10,
+        height: 60,
+        width: 60,
+        borderRadius: 50
     }
 })

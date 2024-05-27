@@ -4,6 +4,7 @@ import styles from './Items-List.style';
 import { FlatList } from 'react-native-gesture-handler';
 import { firebase } from '@react-native-firebase/database';
 import VARIABLES from '../../constants/variables';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Item = ({ item, onPressHandler }) => {
   const isExpired = new Date(item.expiry_date) < new Date();
@@ -96,7 +97,7 @@ const ItemsList: React.FC = ({ navigation, route }) => {
     // fetchData();
   }, []);
 
-  const onPressHandler = (itemId) => {
+  const onPressHandler = (itemId = null) => {
     navigation.navigate('ItemsDetails', { itemId: itemId});
   };
 
@@ -111,6 +112,9 @@ const ItemsList: React.FC = ({ navigation, route }) => {
         keyExtractor={(item) => item.id}
         numColumns={2}
       />
+      <TouchableOpacity style={styles.floatingButton} onPress={() => onPressHandler(null)}>
+        <Icon name="plus" size={30}/>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -19,6 +19,7 @@ const HomeStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name='Home' component={Home}/>
       <Stack.Screen name='ItemsList' component={ItemsList}/>
+      <Stack.Screen name='ItemsDetails' component={ItemsDetails}/>
     </Stack.Navigator>
   );
 }
@@ -45,10 +46,12 @@ const Navigator: React.FC = () => {
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (
-              <Icon.Button
+              <Icon
                 name="home"
+                color="#1667B3"
+                size={30}
               >
-              </Icon.Button>
+              </Icon>
             ),
           }}  
         />
@@ -58,10 +61,12 @@ const Navigator: React.FC = () => {
           options={{
             tabBarLabel: 'Items List',
             tabBarIcon: ({ color }) => (
-              <Icon.Button
+              <Icon
                 name="list"
+                color="#1667B3"
+                size={30}
               >
-              </Icon.Button>
+              </Icon>
             ),
           }}  
         />
