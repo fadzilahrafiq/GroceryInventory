@@ -12,10 +12,26 @@ export default StyleSheet.create({
         justifyContent: 'center'
         // overflow: 'scroll'
     },
+    warningBorder: {
+        borderColor: 'rgba(243,151,49, .2)'
+    },
+    warningText: {
+        color: 'rgba(243,151,49, 1)'
+    },
+    errorBorder: {
+        borderColor: 'rgba(238,83,47, .2)'
+    },
+    errorText: {
+        color: 'rgba(238,83,47, 1)'
+    },
     text:{
         color:'#1667B3',
         fontSize:24
     
+    },
+    userBarContainer: {
+        width: '100%',
+        // marginBottom: 30
     },
     userBar: {
         width: '100%',
@@ -31,10 +47,12 @@ export default StyleSheet.create({
     },
     userBarText: {
         color: '#1667B3',
+        fontWeight: 'bold',
+        fontSize: 25
     },
     userBarIcon: {
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         borderRadius: 50
     },
     header: {
@@ -59,13 +77,111 @@ export default StyleSheet.create({
     },
     content: {
         width: '100%',
-        flexDirection: 'column',
+        flexDirection: 'row',
         flexWrap: 'wrap',
-        alignContent: 'flex-start',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        padding: 10,
+        paddingTop: 20,
+        // backgroundColor: 'red'
+    },
+    contentContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignContent: 'center'
+    },
+    pillBoxes: {
+        width: '45%',
+        // flex: 1,
+        flexDirection: 'row',
+        alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(22,103,179, .2)',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    pillBox: {
+        width: '95%',
+        marginTop: 20,
+        // flex: 1,
+        flexDirection: 'row',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(22,103,179, .2)',
+        paddingTop: 10,
+        paddingBottom: 10
+    },
+    pillBoxLeft: {
+        width: '30%',
+        padding: 5
+    },
+    pillBoxleftText: {
+        fontWeight: 'bold',
+        fontSize: 30,
+        color: 'rgb(22,103,179)'
+    },
+    pillBoxRight: {
+        width: '70%',
+        padding: 5
+    },
+    pillBoxRightText: {
+        fontSize: 15,
+        color: '#1f1f1f'
+    },
+    graphContainer: {
+        backgroundColor: '#1667b3',
+        // width: '100%',
+        minHeight: 50,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom: 20,
+        paddingTop: 20
+    },
+    graphTitle: {
+        fontWeight: '900',
+        color: 'white'
+    },
+    graphContent: {
+        width: '100%',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center'
+    },
+    statsContainer: {
+        justifyContent: 'space-evenly',
+    },
+    statPills: {
+        width: '45%',
+        backgroundColor: 'rgba(255,255,255,.1)',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        marginBottom: 15,
         padding: 10,
-        marginTop: 40
+        borderRadius: 50
+    },
+    statsHeader: {
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: 900
+    },
+    statsSub: {
+        textAlign: 'center'
     },
     contentBox: {
         width: '100%',

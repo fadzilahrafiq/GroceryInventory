@@ -4,6 +4,7 @@ import styles from './Items-Details.style';
 import { firebase } from '@react-native-firebase/database';
 import VARIABLES from '../../constants/variables'; 
 import DatePicker from 'react-native-date-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const formatDateToFormat = (dateObject) => {
   const isoString = dateObject.toISOString();
@@ -37,13 +38,15 @@ const ItemsDetails = ({ navigation, route }) => {
   const [category, onCategoryChange] = useState('');
   const [expiryObj, onExpiryChange] = useState(currentDate);
   const [expiry, onExpiryChangeText] = useState(currentDate.toLocaleDateString());
+
   const [openDatePicker, setDatePicker] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+
+  const [categories, setCategory] = useState([]);
 
   useEffect( () => {
     const fetchData = () => {
       const routeParams = route.params;
-
-      console.log(routeParams);
     
       if (routeParams.itemId && routeParams.itemId != null) {
         firebase
@@ -67,6 +70,30 @@ const ItemsDetails = ({ navigation, route }) => {
     }
 
     fetchData();
+
+    const fetchCategory = () => {
+      firebase
+        .app()
+        .database(VARIABLES.FIREBASE_DB)
+        .ref('/itemCategory')
+        .once('value', snapshot => {
+          // console.log(snapshot);
+          let tempArray = [];
+          snapshot.forEach(element => {
+            // console.log(element.key);
+            let tempObj = {
+              label: element.val(),
+              value: element.val()
+            }
+            
+            tempArray.push(tempObj);
+          });
+
+          setCategory(tempArray);
+        })
+    }
+
+    fetchCategory();
   }, [route.params]);
 
 
@@ -130,10 +157,13 @@ const ItemsDetails = ({ navigation, route }) => {
         </View>
         <View style={styles.inputFieldContainer}>
           <Text style={styles.textInputHeader}>Category</Text>
-          <TextInput
-            style={styles.textInput}
+          <DropDownPicker 
+            open={openCategory}
             value={category}
-            onChangeText={onCategoryChange}
+            items={categories}
+            setOpen={setOpenCategory}
+            setValue={onCategoryChange}
+            setItems={setCategory}
           />
         </View>
         <View style={styles.inputFieldContainer}>
