@@ -31,6 +31,7 @@ export default StyleSheet.create({
     },
     userBarContainer: {
         width: '100%',
+        backgroundColor: 'rgba(255,255,255,.5)'
         // marginBottom: 30
     },
     userBar: {
@@ -38,7 +39,7 @@ export default StyleSheet.create({
         // backgroundColor: 'red',
         padding: 20,
         paddingTop: 20,
-        paddingBottom: 60,
+        paddingBottom: 20,
         flexWrap: 'wrap',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -83,7 +84,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
         padding: 10,
-        paddingTop: 20,
+        paddingTop: 50,
         // backgroundColor: 'red'
     },
     contentContainer: {

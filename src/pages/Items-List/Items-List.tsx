@@ -104,7 +104,12 @@ const ItemsList: React.FC = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
-        <Text style={styles.topBarText}>YouGrocer</Text>
+        <Text style={styles.topBarText}>YouGrocer <Icon name='angle-right' size={20} />&nbsp;
+          { (
+            !routeParams ? 'All Items' :
+            (routeParams.isExpired ? 'Expired Items' : 
+            (routeParams.isNearing ? 'Nearing Expiry Items' : 'All Items') )
+        ) }</Text>
       </View>
       <FlatList
         data={data}
