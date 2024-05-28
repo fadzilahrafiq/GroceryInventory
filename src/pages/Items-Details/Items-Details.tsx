@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {SafeAreaView, Image, View, Text, TouchableOpacity, TextInput, Button} from 'react-native';
+import {SafeAreaView, Image, View, Text, TouchableOpacity, TextInput, Button, ToastAndroid} from 'react-native';
 import styles from './Items-Details.style';
 import { firebase } from '@react-native-firebase/database';
 import VARIABLES from '../../constants/variables'; 
@@ -29,6 +29,14 @@ const formatDateToFormat = (dateObject) => {
 
   return formattedDate;
 
+}
+
+const showToast = (isUpdate = null) => {
+  ToastAndroid.showWithGravity(
+    isUpdate ? 'Successfully updated the item' : 'Successfully added item',
+    ToastAndroid.SHORT,
+    ToastAndroid.CENTER,
+  );
 }
 
 const ItemsDetails = ({ navigation, route }) => {
@@ -121,7 +129,7 @@ const ItemsDetails = ({ navigation, route }) => {
           firebase
             .app()
             .database(VARIABLES.FIREBASE_DB)
-            .ref('/itemCount').set(countSnap.val()+1).then( () => navigation.goBack())
+            .ref('/itemCount').set(countSnap.val()+1).then( () => {showToast(false); navigation.goBack()})
         })
     } else {
       const updateRef = firebase
@@ -134,7 +142,7 @@ const ItemsDetails = ({ navigation, route }) => {
         item_name: name,
         item_cat: category,
         expiry_date: formatDateToFormat(expiryObj)
-      }).then( () => navigation.goBack())
+      }).then( () => {showToast(true); navigation.goBack()})
     }
   }
 
