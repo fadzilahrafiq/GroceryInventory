@@ -39,6 +39,14 @@ const showToast = (isUpdate = null) => {
   );
 }
 
+const showDelete = () => {
+  ToastAndroid.showWithGravity(
+    'Successfully deleted the item',
+    ToastAndroid.SHORT,
+    ToastAndroid.CENTER,
+  );
+}
+
 const ItemsDetails = ({ navigation, route }) => {
   const currentDate = new Date();
   const [itemKey, onItemKey] = useState(null);
@@ -105,10 +113,17 @@ const ItemsDetails = ({ navigation, route }) => {
   }, [route.params]);
 
 
-  const submitPressHandler = () => {
+  const submitPressHandler = (isDelete = false) => {
     var formattedDate = formatDateToFormat(expiryObj);
 
-    if (!itemKey) {
+    if (isDelete == true) {
+      const deleteRef = firebase
+        .app()
+        .database(VARIABLES.FIREBASE_DB)
+        .ref('/itemList/'+itemKey);
+
+        deleteRef.remove().then( () => {showDelete(); navigation.goBack()})
+    } else if (!itemKey) {
       firebase
         .app()
         .database(VARIABLES.FIREBASE_DB)
@@ -186,9 +201,15 @@ const ItemsDetails = ({ navigation, route }) => {
         </View>
         <View style={styles.inputFieldContainer}>
           <TouchableOpacity style={styles.submitButton} onPress={submitPressHandler}>
-            <Text>Submit</Text>
+            <Text>Save</Text>
           </TouchableOpacity>
         </View>
+        {/* {   }
+        <View style={styles.inputFieldContainer}>
+          <TouchableOpacity style={styles.deleteButton} onPress={() => submitPressHandler(true)}>
+            <Text>Delete</Text>
+          </TouchableOpacity>
+        </View> */}
       </View>
       <DatePicker
         modal

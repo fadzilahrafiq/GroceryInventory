@@ -29,14 +29,18 @@ const Home: React.FC = () => {
         let tempData = snapshot.val();
  
         setData(tempData);
-
-        setExpired(tempData.filter( (el) => { return new Date() > new Date(el.expiry_date) }));
+        console.log(tempData);
+        setExpired(tempData.filter( (el) => { return el ? new Date() > new Date(el.expiry_date): null }));
 
         setNearing(tempData.filter( el => {
-          var expiryDate = new Date(el.expiry_date);
-          var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
-          var currDate = new Date();
-          return currDate < new Date(el.expiry_date) && currDate >= oneMonthPrior ;
+          if (el) {
+            var expiryDate = new Date(el.expiry_date);
+            var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
+            var currDate = new Date();
+            return currDate < new Date(el.expiry_date) && currDate >= oneMonthPrior ;
+          } else {
+            return null;
+          }
         }))
 
         fetchCategory(tempData);

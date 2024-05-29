@@ -7,21 +7,24 @@ import VARIABLES from '../../constants/variables';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Item = ({ item, onPressHandler }) => {
-  const isExpired = new Date(item.expiry_date) < new Date();
+  if (item) {
+    const isExpired = new Date(item.expiry_date) < new Date();
 
-  var expiryDate = new Date(item.expiry_date);
-  var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
-  var currDate = new Date();
-  const isNearing = currDate < new Date(item.expiry_date) && currDate >= oneMonthPrior ;
+    var expiryDate = new Date(item.expiry_date);
+    var oneMonthPrior = expiryDate.setDate(expiryDate.getDate() - 30);
+    var currDate = new Date();
+    const isNearing = currDate < new Date(item.expiry_date) && currDate >= oneMonthPrior ;
+  
+    return (
+    <TouchableOpacity key={item.id} onPress={ () => onPressHandler(item.id) } style={styles.listItem}>
+      {isExpired && <ExpiredText />}
+      {isNearing && <NearingExpireText />}
+      <Image source={require('../../assets/images/default.png')} style={ styles.listItemImage } />
+      <Text style={styles.listItemText}>{item.item_name}</Text>
+    </TouchableOpacity>
+    );
+  }
 
-  return (
-  <TouchableOpacity key={item.id} onPress={ () => onPressHandler(item.id) } style={styles.listItem}>
-    {isExpired && <ExpiredText />}
-    {isNearing && <NearingExpireText />}
-    <Image source={require('../../assets/images/default.png')} style={ styles.listItemImage } />
-    <Text style={styles.listItemText}>{item.item_name}</Text>
-  </TouchableOpacity>
-  );
 };
 
 const ExpiredText = () => (
@@ -114,7 +117,7 @@ const ItemsList: React.FC = ({ navigation, route }) => {
       <FlatList
         data={data}
         renderItem={({ item }) => <Item item={item} onPressHandler={onPressHandler} />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item ? item.id: null}
         numColumns={2}
       />
       <TouchableOpacity style={styles.floatingButton} onPress={() => onPressHandler(null)}>

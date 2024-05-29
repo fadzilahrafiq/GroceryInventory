@@ -58,5 +58,12 @@ export default StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     marginTop: 70
+  },
+  deleteButton: {
+    backgroundColor: '#F73D6A', 
+    paddingVertical: 15, 
+    width: '100%', 
+    borderRadius: 5,
+    alignItems: 'center',
   }
 })
